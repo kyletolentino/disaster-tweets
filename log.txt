@@ -1,0 +1,9 @@
+1/1/2020
+- How do I expand contractions? (i.e. What's -> What is)
+- I should probably:
+1. Tokenize
+2. Expand contractions
+3. Eliminate punctuation par #
+4. Lowercase all?
+- nltk vs spacy?
+
