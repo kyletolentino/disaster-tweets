@@ -1,10 +1,10 @@
-# IGNORE THIS UNTIL I FIND SOLUTION FOR ENCODING/DECODING
-
+# gonna try using tf hub
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import tensorflow as tf
-import tensorflow_datasets as tfds
+import tensorflow_hub as hub
+from sklearn.preprocessing import MultiLabelBinarizer
 
 df = pd.read_csv('../datasets/train.csv')
 
@@ -16,10 +16,26 @@ plt.title('Tweets about Disasters Distribution \n (0: Normal // 1: Disaster)')
 # ~ 40/60 real-to-normal split
 
 target = df.pop('target')
-dataset = tf.data.Dataset.from_tensor_slices((df.text, target.values))
+# print(df.head())
 
-# 7613 rows, let's do a 80/20 train-test split
-# 7613 * .8 = 6090 (roughly)
-train_dataset = dataset.take(6090)
-test_dataset = dataset.skip(6090)
+# want to do a 80/20 train-test split
+train_size = int(len(df) * .8)
 
+train_df = df[:train_size]
+train_target = target[:train_size]
+
+test_df = df[train_size:]
+test_target = df[train_size:]
+
+module_url = "https://tfhub.dev/google/universal-sentence-encoder/4"
+embed = hub.KerasLayer(module_url)
+
+labels = ['Normal', 'Disaster']
+
+encoder = MultiLabelBinarizer()
+encoder.fit(labels)
+train_encoded = encoder.transform(test_target)
+test_encoded = encoder.transform(test_target)
+num_classes = len(encoder.classes_)
+
+print(encoder.classes_)
