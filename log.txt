@@ -5,5 +5,18 @@
 2. Expand contractions
 3. Eliminate punctuation par #
 4. Lowercase all?
-- nltk vs spacy?
+- nltk vs spacy? -> gonna go w/ nltk
+
+1/2/2020
+- Should I use tensorflow_dataset tools?
+- Created tensorflow_RNN to test the above (so I don't overwrite what I have)
+- HUGE PROBLEM: How do I set aside sub datasets for training and evaluating?
+    1. train_test_split for test, train, val then load into tf.Dataset?
+    2. load into tf.Dataset, then split that Dataset?
+    Decided to go with 1, par val (so jus test and train)
+- ANOTHER HUGE PROBLEM: Need corpus and vocab to actually decode, might just go back to disaster.py
+- Had to nltk.download: stopwords, wordnet
+- for now, will not normalize text (i.e. dates, numbers, abbreviations -> text)
+- probably will need to replace nltk lemmatization w/ spacy, but nltk good for now
+
 
