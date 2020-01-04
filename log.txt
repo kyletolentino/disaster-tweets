@@ -1,3 +1,16 @@
+1/4/2020
+- from reading online, I must use the same tokenizer in training and test data, otherwise
+    there will be different tokens for each dataset
+- batch size = # of sample processed before model is updated:
+    >= 1 OR <= # of samples in training dataset
+- # of epochs = # of complete passes through the dataset (arbitrary, can be infinite)
+- epochs * steps per epoch = batch size
+- will need to improve tf.dataset pipeline?
+- need to figure out what happened when I converted df to ds (why do I go from 4872 to 49???)
+- will try using tf.hub on separate python file
+
+
+
 1/3/2020
 - reformatted log so most recent is at top
 - for tf.hub, will work on just one feature column (text), eventually will add keywords and location
@@ -27,11 +40,12 @@
 - probably will need to replace nltk lemmatization w/ spacy, but nltk good for now
 - forgot about tensorflow_hub, will try to implement in tensorflow_RNN
 
+
 1/1/2020
 - How do I expand contractions? (i.e. What's -> What is)
 - I should probably:
-1. Tokenize
-2. Expand contractions
-3. Eliminate punctuation par #
-4. Lowercase all?
+    1. Tokenize
+    2. Expand contractions
+    3. Eliminate punctuation par #
+    4. Lowercase all?
 - nltk vs spacy? -> gonna go w/ nltk
