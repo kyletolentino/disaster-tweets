@@ -4,6 +4,19 @@ from nltk.stem import WordNetLemmatizer
 from string import punctuation
 import numpy as np
 import unidecode
+import re
+
+tw_tk = TweetTokenizer(strip_handles=True, reduce_len=True)
+
+
+def preprocess_text(text):
+    tokens = tw_tk.tokenize(text)
+    list = remove_accent(tokens)
+    list = no_punctuation(list)
+    list = no_stop_words(list)
+    list = remove_links(list)
+    list = convert_hashtag(list)
+    return lemmatize(list)
 
 
 def remove_accent(list):
@@ -24,21 +37,23 @@ def no_stop_words(list):
     return [i for i in list if i not in stop_words]
 
 
+def remove_links(list):
+    no_links = []
+    for i in list:
+        no_links.append(re.sub(r"http\S+", "", i))
+    return no_links
+
+
+# not removing text with hashtag because could be important, so just stripping '#' itself
+def convert_hashtag(list):
+    converted = []
+    for i in list:
+        converted.append(re.sub(r"#", '', i))
+    return converted
+
+
 # we want stem of word, except compared to stemming, we want an actual word
 def lemmatize(list):
     wordnet_lemmatizer = WordNetLemmatizer()
-    lemmatize_words = np.vectorize(wordnet_lemmatizer.lemmatize)
-    lemmatized_text = ' '.join(lemmatize_words(list))
+    lemmatized_text = ' '.join(wordnet_lemmatizer.lemmatize(i) for i in list)
     return lemmatized_text
-
-
-tk = TweetTokenizer(strip_handles=True, reduce_len=True)
-text = """
-On the 13 Feb. 2007, Theresa May announced on MTV news that the rate of childhod obesity had 
-risen from 7.3-9.6% in just 3 years , costing the N.A.T.O £20m
-"""
-s = tk.tokenize(text)
-s1 = remove_accent(s)
-s2 = no_punctuation(s1)
-s3 = no_stop_words(s2)
-print(lemmatize(s3))

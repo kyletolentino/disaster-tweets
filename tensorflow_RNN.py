@@ -53,7 +53,7 @@ test_ds = df_to_ds(test_df)
 
 # creating datasets
 BUFFER_SIZE = 1000
-BATCH_SIZE = 49
+BATCH_SIZE = 50
 
 train_ds = tf.data.Dataset.from_tensor_slices((train_seq, train_target))
 train_ds = train_ds.shuffle(BUFFER_SIZE).batch(BATCH_SIZE)
@@ -78,12 +78,13 @@ model.compile(loss='binary_crossentropy',
               optimizer=tf.keras.optimizers.Adam(1e-4),
               metrics=['accuracy'])
 
-history = model.fit(train_ds, epochs=49, validation_data=val_ds)
+history = model.fit(train_ds, epochs=50, validation_data=val_ds)
 
 test_loss, test_acc = model.evaluate(test_ds)
 print('\n')
 print('Test Loss: {}'.format(test_loss))
 print('Test Accuracy: {}'.format(test_acc))
+
 
 def plot_graphs(history, string):
     plt.plot(history.history[string])
@@ -92,6 +93,7 @@ def plot_graphs(history, string):
     plt.ylabel(string)
     plt.legend([string, 'val_'+string])
     plt.show()
+
 
 plot_graphs(history, 'accuracy')
 plot_graphs(history, 'loss')
