@@ -9,6 +9,7 @@ import re
 tw_tk = TweetTokenizer(strip_handles=True, reduce_len=True)
 
 
+# I change the last line pending if I want the lemmatization as a single string or kept in a list
 def preprocess_text(text):
     tokens = tw_tk.tokenize(text)
     list = remove_accent(tokens)
@@ -16,7 +17,7 @@ def preprocess_text(text):
     list = no_stop_words(list)
     list = remove_links(list)
     list = convert_hashtag(list)
-    return lemmatize(list)
+    return lemmatized_list(list)
 
 
 def remove_accent(list):
@@ -26,13 +27,15 @@ def remove_accent(list):
     return no_accents
 
 
+# first variant keeps contractions, second completely removes them (i.e. "What's" would be gone in 2nd)
 def no_punctuation(list):
-    return [i for i in list if i not in punctuation]
+    # return [i for i in list if i not in punctuation]
+    return [i.lower() for i in list if i.isalpha()]
 
 
 # "Illinois is not on fire" vs "Illinois is on fire" - should remove 'not' from stop_words
 def no_stop_words(list):
-    stop_words = stopwords.words('english')
+    stop_words = set(stopwords.words('english'))
     stop_words.remove('not')
     return [i for i in list if i not in stop_words]
 
@@ -53,7 +56,15 @@ def convert_hashtag(list):
 
 
 # we want stem of word, except compared to stemming, we want an actual word
-def lemmatize(list):
+def lemmatized_text(list):
     wordnet_lemmatizer = WordNetLemmatizer()
     lemmatized_text = ' '.join(wordnet_lemmatizer.lemmatize(i) for i in list)
     return lemmatized_text
+
+
+def lemmatized_list(list):
+    new_list = []
+    wordnet_lemmatizer = WordNetLemmatizer()
+    for i in list:
+        new_list.append(wordnet_lemmatizer.lemmatize(i))
+    return new_list
