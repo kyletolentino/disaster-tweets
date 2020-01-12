@@ -52,12 +52,12 @@ val_ds = df_to_ds(val_df)
 # test_ds = df_to_ds(test_df)
 
 # creating datasets
-BUFFER_SIZE = 10000
+BUFFER_SIZE = 6090
 BATCH_SIZE = 32
-# max batch size = available GPU memory bytes / 4 / (size of tensors + trainable parameters)
-# 2108 MB memory
+# batch size of 32 outperformed other powers of 2
 
 train_ds = tf.data.Dataset.from_tensor_slices((train_seq, train_target))
+# print(tf.data.experimental.cardinality(train_ds))
 
 train_ds = train_ds.shuffle(BUFFER_SIZE).batch(BATCH_SIZE, drop_remainder=True)
 val_ds = val_ds.batch(BATCH_SIZE, drop_remainder=True)
@@ -70,9 +70,10 @@ val_ds = val_ds.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
 # test_ds = test_ds.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
 
 # buld a sequential model for RNN
+# for now, Dropout = 0.4 shows a (slightly) higher val_accuracy
 model = tf.keras.Sequential([
-    layers.Embedding(vocab_size, 64),
-    layers.Bidirectional(tf.keras.layers.LSTM(64)),
+    layers.Embedding(vocab_size, 32),
+    layers.Bidirectional(tf.keras.layers.LSTM(32)),
     layers.Dense(32, activation='relu'),
     layers.Dropout(0.4),
     layers.Dense(1, activation='sigmoid')
@@ -90,7 +91,6 @@ history = model.fit(train_ds, epochs=50, validation_data=val_ds, callbacks=[call
 # print('\n')
 # print('Test Loss: {}'.format(test_loss))
 # print('Test Accuracy: {}'.format(test_acc))
-
 
 def plot_graphs(history, string):
     plt.plot(history.history[string])
