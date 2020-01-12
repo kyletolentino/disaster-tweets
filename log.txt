@@ -1,7 +1,37 @@
+1/12/2020
+- overfitting is still a HUGE issue (not terrible)
+- val_accuracy is around 77, would like to bring it up
+- will try dropout
+- added EarlyStopping w/ patience = 3
+- added Dropout to handle overfitting, similar results between 0.4 and 0.5
+- will try new method w/o converting dataframes to datasets [tomorrow]
+
+1/11/2020
+- Formula of mean of the words by ponderation w/ their Tf-idf:
+    n = # of words in text
+    Wi = vector Word2Vec (size 300) for a given word i
+    Ti is the value of tfidf for a given word i
+- my word2vec model performs way worse than tensorflow_RNN (accuracy was ~50, yikes)
+- ultimately decided to focus on fine tuning tensorflow_RNN
+
+
+1/9/2020
+- working on manual_tokenized (name might change)
+- word2vec - use twitter or google news model?
+- might just test both to see which performs better
+- text_processing - considered just removing contractions, commented out original
+- Tfid is a good way to measure the strength of a word in a document
+
 1/5/2020
 - finished (?) text_processing to fully preprocess text
     "6205 - I want smoke"
--
+- For our training Word2Vec embedding:
+    sentences = list of sentences (tweets)
+    size = # of dimensions we want to represent our word (size of the word vector)
+    min_count = words w/ freq > min_count are only going to be included
+    window = only terms that occur w/in a window-neighborhood of a term are associated (?) ; usually 4-5
+    workers = # of threads used in training parallelization (i.e. speeds it up)
+- renamed file, but code still does not work
 
 
 1/4/2020
