@@ -1,10 +1,7 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.layers import Input, Dense, LSTM, Dropout, Activation, Bidirectional, GlobalMaxPool1D, Embedding
-from tensorflow.keras.models import Model
 from tensorflow.keras import layers
 
 train = pd.read_csv('../datasets/train.csv')
@@ -36,28 +33,26 @@ embed_size = 128
 
 model = tf.keras.Sequential([
     layers.Embedding(vocab_size, embed_size, input_shape=(max_len, )),
-    layers.LSTM(64, return_sequences=True, name='lstm_layer'),
+    layers.LSTM(16, return_sequences=True, name='lstm_layer'),
     layers.GlobalMaxPool1D(),
     layers.Dropout(0.1),
-    layers.Dense(32, activation='relu'),
+    layers.Dense(16, activation='relu'),
     layers.Dropout(0.1),
-    layers.Dense(1, activation='sigmoid')
+    layers.Dense(1, activation='sigmoid', name='out_layer')
 ])
 
 model.compile(loss='binary_crossentropy',
               optimizer=tf.keras.optimizers.Adam(1e-4),
               metrics=['accuracy'])
-# model.summary()
+model.summary()
 
-# there are 6090 samples
-batch_size = 50
-epoch_size = 50
+batch_size = 64
+epoch_size = 10
 
 callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
-steps = int(np.ceil(X_train.shape[0] / batch_size))
 
-history = model.fit(X_train, y, batch_size=batch_size, epochs=epoch_size,
-                    validation_split=0.2, callbacks=[callback])
+history = model.fit(X_train, y, epochs=epoch_size, batch_size=batch_size,
+                    validation_split=0.25, callbacks=[callback], shuffle=True)
 
 
 def plot_graphs(history, string):
