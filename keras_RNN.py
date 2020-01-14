@@ -24,29 +24,29 @@ vocab_size = len(tk.word_index) + 1
 # plt.show()
 # 150 looks like a good maximum (most were around 100-150)
 
+# (7613, 150) shape for X_train
 max_len = 150
 X_train = tf.keras.preprocessing.sequence.pad_sequences(tokenized_train, maxlen=max_len)
 X_test = tf.keras.preprocessing.sequence.pad_sequences(tokenized_test, maxlen=max_len)
 
-embed_size = 128
+embed_size = 256
 
 model = tf.keras.Sequential([
     layers.Embedding(vocab_size, embed_size, input_shape=(max_len, )),
-    layers.Bidirectional(layers.LSTM(64, return_sequences=True)),
-    layers.SpatialDropout1D(0.1),
     layers.GlobalMaxPool1D(),
-    layers.Dense(64, activation='relu'),
+    layers.Dropout(0.1),
+    layers.Dense(256, activation='relu'),
     layers.Dropout(0.1),
     layers.Dense(1, activation='sigmoid')
 ])
 
 model.compile(loss='binary_crossentropy',
-              optimizer=tf.keras.optimizers.Adam(1e-4),
+              optimizer=tf.keras.optimizers.Adam(lr=1e-4),
               metrics=['accuracy'])
 model.summary()
 
 batch_size = 32
-epoch_size = 10
+epoch_size = 50
 
 callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
 
@@ -65,3 +65,4 @@ def plot_graphs(history, string):
 
 plot_graphs(history, 'accuracy')
 plot_graphs(history, 'loss')
+
