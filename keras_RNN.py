@@ -18,7 +18,7 @@ tokenized_test = tk.texts_to_sequences(tweet_test)
 vocab_size = len(tk.word_index) + 1
 # vocab size is 19424
 
-total = [len(i) for i in tweet_train]
+# total = [len(i) for i in tweet_train]
 # plt.figure(1)
 # plt.hist(total, bins=np.arange(0, 410, 10))
 # plt.show()
@@ -28,17 +28,16 @@ max_len = 150
 X_train = tf.keras.preprocessing.sequence.pad_sequences(tokenized_train, maxlen=max_len)
 X_test = tf.keras.preprocessing.sequence.pad_sequences(tokenized_test, maxlen=max_len)
 
-# i = Input(shape=(max_len, ))
 embed_size = 128
 
 model = tf.keras.Sequential([
     layers.Embedding(vocab_size, embed_size, input_shape=(max_len, )),
-    layers.LSTM(16, return_sequences=True, name='lstm_layer'),
+    layers.Bidirectional(layers.LSTM(64, return_sequences=True)),
+    layers.SpatialDropout1D(0.1),
     layers.GlobalMaxPool1D(),
+    layers.Dense(64, activation='relu'),
     layers.Dropout(0.1),
-    layers.Dense(16, activation='relu'),
-    layers.Dropout(0.1),
-    layers.Dense(1, activation='sigmoid', name='out_layer')
+    layers.Dense(1, activation='sigmoid')
 ])
 
 model.compile(loss='binary_crossentropy',
@@ -46,13 +45,13 @@ model.compile(loss='binary_crossentropy',
               metrics=['accuracy'])
 model.summary()
 
-batch_size = 64
+batch_size = 32
 epoch_size = 10
 
 callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
 
-history = model.fit(X_train, y, epochs=epoch_size, batch_size=batch_size,
-                    validation_split=0.25, callbacks=[callback], shuffle=True)
+history = model.fit(X_train, y, epochs=epoch_size,
+                    validation_split=0.2, callbacks=[callback], shuffle=True)
 
 
 def plot_graphs(history, string):
