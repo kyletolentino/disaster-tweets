@@ -30,6 +30,7 @@ X_train = tf.keras.preprocessing.sequence.pad_sequences(tokenized_train, maxlen=
 X_test = tf.keras.preprocessing.sequence.pad_sequences(tokenized_test, maxlen=max_len)
 
 embed_size = 256
+epoch_size = 50
 
 model = tf.keras.Sequential([
     layers.Embedding(vocab_size, embed_size, input_shape=(max_len, )),
@@ -41,12 +42,9 @@ model = tf.keras.Sequential([
 ])
 
 model.compile(loss='binary_crossentropy',
-              optimizer=tf.keras.optimizers.Adam(lr=1e-4),
+              optimizer=tf.keras.optimizers.SGD(momentum=0.9, nesterov=True, lr=0.005, decay=1e-6),
               metrics=['accuracy'])
 model.summary()
-
-batch_size = 32
-epoch_size = 50
 
 callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
 
