@@ -1,10 +1,41 @@
+1/15/2020
+- created jupyter notebook to test hyperparameter tuning
+- couldn't get TensorBoard to work on Pycharm
+- implemented basic GridSearch on neurons, dropout, and optimizers
+- might consider installing bayesian optimizers package?
+
+
+1/14/2020
+- changing embed size (i.e. starting input neurons) to 256 improved val_accuracy to 79
+- read online that compared SGD with Adam:
+https://shaoanlu.wordpress.com/2017/05/29/sgd-all-which-one-is-the-best-optimizer-dogs-vs-cats-toy-experiment/
+    "adaptive methods generalize worse than SGD, even when solutions
+        have better training performance"
+- so far, increasing embed size improved val_loss and val_accuracy (removed LSTM)
+- gotta look into Grid Search / other hyperparamter optimizers (been doing trial & error)
+
+
+1/13/2020
+- why is tf_dataset_RNN performing (a little) better than keras_RNN?
+- adding SpatialDropout1D improved accuracy (val_accuracy = 0.7886)
+- can't really run BERT, need 12GB of RAM (GPU) to run any batch size >1
+
+
 1/12/2020
 - overfitting is still a HUGE issue (not terrible)
 - val_accuracy is around 77, would like to bring it up
 - will try dropout
 - added EarlyStopping w/ patience = 3
 - added Dropout to handle overfitting, similar results between 0.4 and 0.5
-- will try new method w/o converting dataframes to datasets [tomorrow]
+- maybe consider adding more hidden layers?
+- renamed tensorflow_RNN to tf_dataset_RNN (current ver has accuracy around 79)
+NOTES:
+- LSTM takes in a tensor of [Batch Size, Time Steps, Number of Inputs]
+- batch size is # of samples in a batch
+- time steps is # of recursion it runs for each input
+- number of inputs is # of variables(number of words in each sentence in our case) you pass into LSTM
+- getting an avergae of 0.75 for keras_RNN
+
 
 1/11/2020
 - Formula of mean of the words by ponderation w/ their Tf-idf:
@@ -21,6 +52,7 @@
 - might just test both to see which performs better
 - text_processing - considered just removing contractions, commented out original
 - Tfid is a good way to measure the strength of a word in a document
+
 
 1/5/2020
 - finished (?) text_processing to fully preprocess text
@@ -40,7 +72,7 @@
 - batch size = # of sample processed before model is updated:
     >= 1 OR <= # of samples in training dataset
 - # of epochs = # of complete passes through the dataset (arbitrary, can be infinite)
-- epochs * steps per epoch = batch size
+- *** epochs * steps per epoch = batch size ****
 - will need to improve tf.dataset pipeline?
 - need to figure out what happened when I converted df to ds (why do I go from 4872 to 49???)
 - will try using tf.hub on separate python file
