@@ -4,7 +4,7 @@ This is my first, amateur attempt at machine learning and Natural Lanugage Proce
 ## Why did I do this?
 I wanted to try implementing my own model without copying an already-solved problem. After doing some tutorials on Kaggle, I
 came across [this](https://www.kaggle.com/c/nlp-getting-started), and I thought it would be an interesting project. 
-I just used the datasets they provided for my own use, asthe actual competition requires the use of AutoML, and I wanted to try out a Tensorflow/Keras solution.
+I just used the datasets they provided for my own use, as the actual competition requires the use of AutoML, and I wanted to try out a Tensorflow/Keras solution.
 
 ## Setup
 **Built with:**
@@ -14,14 +14,14 @@ I just used the datasets they provided for my own use, asthe actual competition 
 - matplotlib / seaborn
 - sklearn
 
-Anaconda was used to create a virtual environment (so I didn't mess up my computer). I also installed ntlk when 
+Anaconda was used to create a virtual environment (so I didn't mess up my computer), and I ran my code on PyCharm. For demonstrating, I used Jupyter Notebook so the results could be shown.  I also installed ntlk when 
 I tried preprocessing text myself, but feel free to use whatever (i.e. spaCy).
 
 ## My Journey
 My very first attempt at cracking this was to preprocess the tweets and use an embedding like word2vec, but my training loss 
-was super high and training accuracy was off. Then I discovered a Tensorflow/Keras guide that provided its own tokenizer, which
+was super high and training accuracy was low. Then I discovered a Tensorflow/Keras guide that provided its own tokenizer, which
 motivated me to just create a model and go on from there. Ultimately, I ended up with tf_dataset_RNN and keras_DNN, but 
-text_processing is still there in case I ever go back to manual preprocessing/embedding route. My models only consider the Tweets themselves, not the location nor keywords of those Tweets (eventually, I want to incorporate these into feature columns).
+text_processing is still there in case I ever go back to the manual preprocessing/embedding route. My models only consider the Tweets themselves, not the location nor keywords of those Tweets (eventually, I want to incorporate these into feature columns).
 
 ### tf_dataset_RNN
 After looking at the official Tensorflow guides, I wanted to try converting Pandas dataframes into a tensorflow.data.Dataset format,
@@ -38,29 +38,24 @@ I was putting into the model, and decided to focus on this.
 
 Initially, I tried using a RNN, testing a LSTM and Bidirectional wrapper, but again, did not feel as if I completely understood what I
 was doing. Instead, I went back to a simple model of adding Dense layers, which outperformed RNN model. When I first ran this, training
-loss and accuracy improved, but validation loss and accuracy did not, which was a huge red flag of ***overfitting***
+loss and accuracy improved, but validation loss and accuracy did not, which was a huge red flag of ***overfitting***.
 
 ## Test
 For examples of my models, see:
 - [tf_dataset_RNN_demo](https://github.com/kyletolentino/disaster-tweets/blob/master/tf_dataset_RNN_demo.ipynb)
-- [keras_DNN](https://github.com/kyletolentino/disaster-tweets/blob/master/keras_DNN_demo.ipynb)
+- [keras_DNN_demo](https://github.com/kyletolentino/disaster-tweets/blob/master/keras_DNN_demo.ipynb)
 
 tf_dataset_RNN mostly averaged **around 0.78 to 0.80** for validation accuracy, but again, I was not satisfied since I did not 
-completely understand why.
-As for keras_DNN, it started out with an **average of 0.74**, but I was able to bring that up to **0.79** by attempting to prevent overfitting,
-such as simplifying network and adding Dropout layers.
+completely understand why. As for keras_DNN, it started out with an **average of 0.74**, but I was able to bring that up to **0.79** by attempting to prevent overfitting, such as simplifying network and adding Dropout layers.
 
 See [log.txt](https://github.com/kyletolentino/disaster-tweets/blob/master/log.txt) for my documented progress along the way.
 
 ## Reflections
-Actually creating models for machine learning is not hard (I'm referring to just adding Keras layers). The biggest challenge that I faced
-was making sure my model did not put out straight garbage, because you could have a great model, but if you input terrible data, you
-will get terrible predictions (which I experienced firsthand with manually tokenizing and embedding).
+The biggest challenge that I faced was making sure my model did not put out straight garbage, because you could have a great model, but if you input terrible data, you will get terrible predictions (which I experienced firsthand with manually tokenizing and embedding).
 
 Although a validation accuracy of around 0.79 could be improved, I'm pretty happy with the results, as this was my first crack at NLP.
-In the future, I would like to implement BERT for embedding words, as [that's what the cool kids are using](https://arxiv.org/pdf/1810.04805.pdf).
-However, with my current GPU, I could only implement BERT on a cloud platform, as using tensorflow-hub on my desktop crashed. I would also like
-to look into optimizing hyperparameters, as I tried using TensorBoard but I'm currently stuck on clearing log files.
+In the future, I would like to implement BERT for embedding words, as [that's what the cool kids are using right now](https://jalammar.github.io/illustrated-bert/).
+However, with my current GPU, I would only be able to implement BERT on a cloud platform, as using tensorflow-hub on my desktop crashed. I would also like to look into optimizing hyperparameters, as I tried GridSearch using TensorBoard but I'm currently stuck on how to clear log files.
 
 ## Credits
 I would like to give credit to the following sites/articles for help and inspiration:
@@ -81,4 +76,4 @@ Here are some articles that I think would be helpful:
 - [Choosing number of steps per epoch](https://stackoverflow.com/questions/49922252/choosing-number-of-steps-per-epoch)
 - [Explaining activation functions](https://medium.com/@himanshuxd/activation-functions-sigmoid-relu-leaky-relu-and-softmax-basics-for-neural-networks-and-deep-8d9c70eed91e)
 
-***Please leave suggestions on how to improve my models, I would appreciate it! :) ***
+** Please leave suggestions on how to improve my models, I would appreciate it! :) **
