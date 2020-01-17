@@ -44,6 +44,7 @@ loss and accuracy improved, but validation loss and accuracy did not, which was 
 For examples of my models, see:
 - [tf_dataset_RNN_demo](https://github.com/kyletolentino/disaster-tweets/blob/master/tf_dataset_RNN_demo.ipynb)
 - [keras_DNN_demo](https://github.com/kyletolentino/disaster-tweets/blob/master/keras_DNN_demo.ipynb)
+- [Predictions](https://github.com/kyletolentino/disaster-tweets/tree/master/predictions)
 
 tf_dataset_RNN mostly averaged **around 0.78 to 0.80** for validation accuracy, but again, I was not satisfied since I did not 
 completely understand why. As for keras_DNN, it started out with an **average of 0.74**, but I was able to bring that up to **0.79** by attempting to prevent overfitting, such as simplifying network and adding Dropout layers.
