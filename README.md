@@ -47,7 +47,7 @@ For examples of my models, see:
 - [Predictions](https://github.com/kyletolentino/disaster-tweets/tree/master/predictions)
 
 tf_dataset_RNN mostly averaged **around 0.78 to 0.80** for validation accuracy, but again, I was not satisfied since I did not 
-completely understand why. As for keras_DNN, it started out with an **average of 0.74**, but I was able to bring that up to ** an average of 0.79 to 0.80** by attempting to prevent overfitting, such as simplifying network and adding Dropout layers.
+completely understand why. As for keras_DNN, it started out with an **average of 0.74**, but I was able to bring that up to **an average of 0.79 to 0.80** by attempting to prevent overfitting, such as simplifying network and adding Dropout layers.
 
 See [log.txt](https://github.com/kyletolentino/disaster-tweets/blob/master/log.txt) for my documented progress along the way.
 
