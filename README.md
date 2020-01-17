@@ -1,11 +1,10 @@
 # Predicting Disasters through Twitter
-This is my first, amateur attempt at machine learning and Natural Lanugage Processing to determine disasters from Twitter.
-My models only consider the Tweets themselves, not the location nor keywords of those Tweets.
+This is my first, amateur attempt at machine learning and Natural Lanugage Processing to determine disasters from Twitter. :)
 
 ## Why did I do this?
 I wanted to try implementing my own model without copying an already-solved problem. After doing some tutorials on Kaggle, I
-came across [this](https://www.kaggle.com/c/nlp-getting-started). I just used the datasets they provided for my own use, as
-the actual competition requires the use of AutoML, and I wanted to try out a Tensorflow/Keras solution.
+came across [this](https://www.kaggle.com/c/nlp-getting-started), and I thought it would be an interesting project. 
+I just used the datasets they provided for my own use, asthe actual competition requires the use of AutoML, and I wanted to try out a Tensorflow/Keras solution.
 
 ## Setup
 **Built with:**
@@ -22,7 +21,7 @@ I tried preprocessing text myself, but feel free to use whatever (i.e. spaCy).
 My very first attempt at cracking this was to preprocess the tweets and use an embedding like word2vec, but my training loss 
 was super high and training accuracy was off. Then I discovered a Tensorflow/Keras guide that provided its own tokenizer, which
 motivated me to just create a model and go on from there. Ultimately, I ended up with tf_dataset_RNN and keras_DNN, but 
-text_processing is still there in case I ever go back to manual preprocessing/embedding route.
+text_processing is still there in case I ever go back to manual preprocessing/embedding route. My models only consider the Tweets themselves, not the location nor keywords of those Tweets (eventually, I want to incorporate these into feature columns).
 
 ### tf_dataset_RNN
 After looking at the official Tensorflow guides, I wanted to try converting Pandas dataframes into a tensorflow.data.Dataset format,
