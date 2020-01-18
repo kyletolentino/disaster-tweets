@@ -61,7 +61,8 @@ However, with my current GPU, I would only be able to implement BERT on a cloud 
 ## Credits
 I would like to give credit to the following sites/articles for help and inspiration:
 
-- [Kaggle's courses on Machine Learning and Deep Learning](https://www.kaggle.com/learn/overview)
+- [Kaggle's Disaster Tweets Dataset](https://www.kaggle.com/c/nlp-getting-started)
+- [Kaggle's courses on Machine Learning](https://www.kaggle.com/learn/overview)
 - [Tensorflow's website](https://www.tensorflow.org/)
 - [Keras Documentation](https://keras.io/)
 - [Article on how to solve 90% of NLP problems](https://blog.insightdatascience.com/how-to-solve-90-of-nlp-problems-a-step-by-step-guide-fda605278e4e)
@@ -77,4 +78,4 @@ Here are some articles that I think would be helpful:
 - [Choosing number of steps per epoch](https://stackoverflow.com/questions/49922252/choosing-number-of-steps-per-epoch)
 - [Explaining activation functions](https://medium.com/@himanshuxd/activation-functions-sigmoid-relu-leaky-relu-and-softmax-basics-for-neural-networks-and-deep-8d9c70eed91e)
 
-** Please leave suggestions on how to improve my models, I would appreciate it! :) **
+**Please leave suggestions on how to improve my models, I would appreciate it! :)**
